@@ -1,0 +1,4 @@
+
+
+
+TN_NUMBER_LEN = 7
