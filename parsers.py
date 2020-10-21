@@ -37,3 +37,14 @@ def parse_transaction(file: str) -> List[Dict]:
             }
             result.append(doc)
     return result
+
+
+def add_tn_to_transaction(transactions: List[Dict], tns: List[Dict]) -> List[Dict]:
+    for tr in transactions:
+        for tn in tns:
+            if tr['number'] == tn['number']:
+                tr['series'] = tn['series']
+                tr['date'] = tn['date']
+                tr['sum'] = tn['sum']
+                tr['contract'] = tn['contract']
+                break
