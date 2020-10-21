@@ -19,7 +19,6 @@ def parse_tn(file: str) -> List[Dict]:
                 'contract': line_list[4]
             }
             result.append(doc)
-    print('parse_tn', len(result))
     return result
 
 
@@ -38,7 +37,6 @@ def parse_transaction(file: str) -> List[Dict]:
                 'price': line_list[4],
             }
             result.append(doc)
-    print('parse_transaction', len(result))
     return result
 
 
@@ -52,5 +50,4 @@ def add_tn_to_transaction(transactions: List[Dict], tns: List[Dict]) -> List[Dic
                 tr['sum'] = tn['sum']
                 tr['contract'] = tn['contract']
                 break
-    print('add_tn_to_transaction', len(result))
     return result
