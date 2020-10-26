@@ -19,7 +19,11 @@ class TN:
         return f'{self.document} {self.contract} {self.transactions_sum}{self.transactions}'
 
     def check_eq_except_transactions(self, other) -> bool:
-        pass
+        return (
+            self.document == other.document and
+            self.transactions_sum == other.transactions_sum and
+            self.contract == other.contract
+        )
 
     def add_transactions_from(self, other) -> None:
         pass
@@ -41,7 +45,7 @@ def from_dict(tn_dict: dict) -> List[TN]:
                     product=tn_data['product'],
                     amount=tn_data['amount'],
                     price=tn_data['price']
-                )
+                ),
             ]
         )
         found: bool = False
