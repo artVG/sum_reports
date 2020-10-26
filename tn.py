@@ -26,7 +26,8 @@ class TN:
         )
 
     def add_transactions_from(self, other) -> None:
-        pass
+        for transaction in other.transactions:
+            self.transactions.append(transaction)
 
 
 def from_dict(tn_dict: dict) -> List[TN]:
