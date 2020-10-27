@@ -1,5 +1,5 @@
 import openpyxl
-import datetime
+from datetime import datetime
 from transaction import Transaction
 from tn import TN
 from pathlib import Path
