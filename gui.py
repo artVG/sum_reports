@@ -14,7 +14,7 @@ from write_excell import (write_report_sorted_contract_sum_transactions_name,
                     write_report_sorted_contract,
                     write_report_sum_transactions_name,
                     write_report_list_tn)
-from work_data import Work_data
+from workdata import WorkData
 
 import copy
 
@@ -178,7 +178,7 @@ class Reports_panell(Frame):
 
 
     def load_data(self):
-        self.data = Work_data(
+        self.data = WorkData(
             Path(self.working_dirs.get_ttn_file()),
             Path(self.working_dirs.get_report_file())
         )
