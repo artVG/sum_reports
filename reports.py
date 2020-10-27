@@ -53,7 +53,7 @@ def report_sorted_by_contract(tn: List[TN]) -> List[List[TN]]:
     return report
 
 
-def report_sum_transactions_name(tns: List[TN]) -> List[Transaction]:  # ---------------------------
+def report_sum_by_transaction(tns: List[TN]) -> List[Transaction]:
     return sum_by_transaction(tns)
 
 
