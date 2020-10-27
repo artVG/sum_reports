@@ -6,116 +6,105 @@ from tkinter import constants as tk_const
 
 from pathlib import Path
 
-from reports import (report_sorted_contract_sum_transactions_name, 
-                    report_sorted_contract,
-                    report_sum_transactions_name,
-                    report_list_tn)
-from write_excell import (write_report_sorted_contract_sum_transactions_name,
-                    write_report_sorted_contract,
-                    write_report_sum_transactions_name,
-                    write_report_list_tn)
-from work_data import Work_data
+from reports import (report_sorted_by_contract_sum_by_transaction,
+                     report_sorted_by_contract,
+                     report_sum_by_transaction,
+                     report_list_tn)
+from write_excell import (write_report_sorted_by_contract_sum_by_transaction,
+                          write_report_sorted_by_contract,
+                          write_report_sum_by_transaction,
+                          write_report_list_tn)
+from workdata import WorkData
 
 import copy
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True)
+class WidgetNames:
+    choose_report: str = 'Отчет БЦК'
+    choose_ttn: str = 'Список ТН'
+    out_dir: str = 'Сохранить'
+    create_report: str = 'Создать'
 
-WIDGET_NAMES = {
-    'choose_report':'Отчет БЦК',
-    'choose_ttn':'Список ТН',
-    'out_dir':'Сохранить',
-    'create_report': 'Создать',
-
-    'report_list_tn': 'Сортировка по ТН',
-    'report_sum_transactions_name': 'Сумма по позициям',
-    'report_sorted_contract': 'Сортировка по контрактам',
-    'report_sorted_contract_sum_transactions_name': 'Сортировка по контрактам сумма по позициям',
-}
+    report_list_tn: str = 'Сортировка по ТН'
+    report_sum_by_transaction: str = 'Сумма по позициям'
+    report_sorted_by_contract: str = 'Сортировка по контрактам'
+    report_sorted_by_contract_sum_by_transaction: str = 'Сортировка по контрактам сумма по позициям'
 
 
-class Choose_file(Frame):
+class ChooseFile(Frame):
 
     def __init__(self, name, width):
         Frame.__init__(self)
         self.file_entry = Entry(self, width=width)
         self.file_entry.grid(row=0, column=0, sticky=tk_const.W)
 
-        self.choose_file_btn = Button(self, text='...', command=lambda : self.choose_file())
+        self.choose_file_btn = Button(self, text='...', command=lambda: self.choose_file())
         self.choose_file_btn.grid(row=0, column=1, sticky=tk_const.W)
 
         self.name = StringVar()
-        self.lable = Label(self, textvariable=self.name)
+        self.label = Label(self, textvariable=self.name)
         self.name.set(name)
-        self.lable.grid(row=0, column=2, sticky=tk_const.W)
+        self.label.grid(row=0, column=2, sticky=tk_const.W)
 
         self.file = str()
-
 
     def choose_file(self):
         self.file = askopenfilename()
         self.file_entry.insert(0, self.file)
 
-    def get_addr(self):
+    def get_address(self):
         return self.file_entry.get()
 
 
-
-class Choose_out_dir(Frame):
+class ChooseOutDir(Frame):
 
     def __init__(self, name, width):
         Frame.__init__(self)
         self.file_entry = Entry(self, width=width)
         self.file_entry.grid(row=0, column=0, sticky=tk_const.W)
 
-        self.choose_file_btn = Button(self, text='...', command=lambda : self.choose_file())
+        self.choose_file_btn = Button(self, text='...', command=lambda: self.choose_file())
         self.choose_file_btn.grid(row=0, column=1, sticky=tk_const.W)
 
         self.name = StringVar()
-        self.lable = Label(self, textvariable=self.name)
+        self.label = Label(self, textvariable=self.name)
         self.name.set(name)
-        self.lable.grid(row=0, column=2, sticky=tk_const.W)
+        self.label.grid(row=0, column=2, sticky=tk_const.W)
 
         self.dir = str()
-
 
     def choose_file(self):
         self.dir = askdirectory()
         self.file_entry.insert(0, self.dir)
 
-    def get_addr(self):
+    def get_address(self):
         return self.file_entry.get()
 
 
-
-class Working_dirs(Frame):
+class WorkingDirs(Frame):
 
     def __init__(self, width):
         Frame.__init__(self)
 
-        self.report = Choose_file(WIDGET_NAMES['choose_report'], width)
-        self.report.file_entry.insert(0, 'E:/python_prj/summ_report_contracts/report.rtf')
+        self.report = ChooseFile(WidgetNames.choose_report, width)
         self.report.grid(row=0, column=0, sticky=tk_const.W)
 
-        self.ttn = Choose_file(WIDGET_NAMES['choose_ttn'], width)
-        self.ttn.file_entry.insert(0, 'E:/python_prj/summ_report_contracts/ttn.rtf')
+        self.ttn = ChooseFile(WidgetNames.choose_ttn, width)
         self.ttn.grid(row=1, column=0, sticky=tk_const.W)
 
-        self.out_dir = Choose_out_dir(WIDGET_NAMES['out_dir'], width)
-        self.out_dir.file_entry.insert(0, 'E:/python_prj/summ_report_contracts')
+        self.out_dir = ChooseOutDir(WidgetNames.out_dir, width)
         self.out_dir.grid(row=2, column=0, sticky=tk_const.W)
 
     def get_report_file(self):
-        return self.report.get_addr()
+        return self.report.get_address()
 
     def get_ttn_file(self):
-        return self.ttn.get_addr()
+        return self.ttn.get_address()
 
     def get_out_dir(self):
-        return self.out_dir.get_addr()
-
-
-    
-
+        return self.out_dir.get_address()
 
 
 class Report(Frame):
@@ -127,12 +116,11 @@ class Report(Frame):
         self.description_label_text.set(name)
         self.description_label.grid(row=0, column=1, sticky=tk_const.W)
 
-        self.create_report_btn = Button(self, text=WIDGET_NAMES['create_report'], command=command)
+        self.create_report_btn = Button(self, text=WidgetNames.create_report, command=command)
         self.create_report_btn.grid(row=0, column=0, sticky=tk_const.W)
 
 
-
-class Reports_panell(Frame):
+class ReportsPanel(Frame):
 
     def __init__(self, working_dirs):
         Frame.__init__(self)
@@ -140,57 +128,54 @@ class Reports_panell(Frame):
         self.data = None
         self.working_dirs = working_dirs
 
-        self.wjt_sorted_contract_sum_transactions_name = Report(
-            name=WIDGET_NAMES['report_sorted_contract_sum_transactions_name'],
-            command=lambda : write_report_sorted_contract_sum_transactions_name(
-                report=report_sorted_contract_sum_transactions_name(self.get_transactions()),
+        self.wjt_sorted_by_contract_sum_by_transaction = Report(
+            name=WidgetNames.report_sorted_by_contract_sum_by_transaction,
+            command=lambda: write_report_sorted_by_contract_sum_by_transaction(
+                report=report_sorted_by_contract_sum_by_transaction(self.get_transactions()),
                 save_dir=Path(self.working_dirs.get_out_dir())
-                )
             )
-        self.wjt_sorted_contract_sum_transactions_name.grid(row=3, column=0, sticky=tk_const.W)
+        )
+        self.wjt_sorted_by_contract_sum_by_transaction.grid(row=3, column=0, sticky=tk_const.W)
 
-        self.wjt_report_sorted_contract = Report(
-            name=WIDGET_NAMES['report_sorted_contract'],
-            command=lambda : write_report_sorted_contract(
-                report=report_sorted_contract(self.get_transactions()),
+        self.wjt_sorted_by_contract = Report(
+            name=WidgetNames.report_sorted_by_contract,
+            command=lambda: write_report_sorted_by_contract(
+                report=report_sorted_by_contract(self.get_transactions()),
                 save_dir=Path(self.working_dirs.get_out_dir())
-                )
             )
-        self.wjt_report_sorted_contract.grid(row=4, column=0, sticky=tk_const.W)
+        )
+        self.wjt_sorted_by_contract.grid(row=4, column=0, sticky=tk_const.W)
 
-        self.wjt_report_sum_transactions_name = Report(
-            name=WIDGET_NAMES['report_sum_transactions_name'],
-            command=lambda : write_report_sum_transactions_name(
-                report=report_sum_transactions_name(self.get_transactions()),
+        self.wjt_sum_by_transaction = Report(
+            name=WidgetNames.report_sum_by_transaction,
+            command=lambda: write_report_sum_by_transaction(
+                report=report_sum_by_transaction(self.get_transactions()),
                 save_dir=Path(self.working_dirs.get_out_dir())
-                )
             )
-        self.wjt_report_sum_transactions_name.grid(row=5, column=0, sticky=tk_const.W)
+        )
+        self.wjt_sum_by_transaction.grid(row=5, column=0, sticky=tk_const.W)
 
-        self.wjt_report_list_tn = Report(
-            name=WIDGET_NAMES['report_list_tn'],
-            command=lambda : write_report_list_tn(
+        self.wjt_list_tn = Report(
+            name=WidgetNames.report_list_tn,
+            command=lambda: write_report_list_tn(
                 report=report_list_tn(self.get_transactions()),
                 save_dir=Path(self.working_dirs.get_out_dir())
-                )
             )
-        self.wjt_report_list_tn.grid(row=6, column=0, sticky=tk_const.W)
-
+        )
+        self.wjt_list_tn.grid(row=6, column=0, sticky=tk_const.W)
 
     def load_data(self):
-        self.data = Work_data(
+        self.data = WorkData(
             Path(self.working_dirs.get_ttn_file()),
             Path(self.working_dirs.get_report_file())
         )
 
-
     def check_data(self):
-        return (self.data and 
-            self.data.check_files(Path(self.working_dirs.get_ttn_file()), 
-                Path(self.working_dirs.get_report_file())
-            )
-        )
-
+        return (self.data and
+                self.data.check_files(Path(self.working_dirs.get_ttn_file()),
+                                      Path(self.working_dirs.get_report_file())
+                                      )
+                )
 
     def get_transactions(self):
         if not self.check_data():
@@ -198,18 +183,15 @@ class Reports_panell(Frame):
         return copy.deepcopy(self.data.transactions)
 
 
-
 class App(Tk):
     def __init__(self):
         Tk.__init__(self)
 
-        self.working_dirs = Working_dirs(100)
+        self.working_dirs = WorkingDirs(100)
 
-        self.reports_panell = Reports_panell(self.working_dirs)
-
+        self.reports_panel = ReportsPanel(self.working_dirs)
 
 
 def run_gui():
     app = App()
     app.mainloop()
-
