@@ -10,7 +10,7 @@ from reports import Report
 
 def replace_special(s: str) -> str:
     result = s
-    special = '\/*?:[].'
+    special = r'\/*?:[].'
     for letter in special:
         result = result.replace(letter, ' ')
     return result
