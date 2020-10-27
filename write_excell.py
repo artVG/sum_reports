@@ -16,11 +16,12 @@ def replace_special(s: str) -> str:
 
 
 def write_transaction(
-        sheet: openpyxl.Worksheet,
+        sheet,
         start_row: int,
         start_column: int,
         transaction: Transaction
 ) -> Tuple[int, int]:
+
     sheet.cell(
         row=start_row,
         column=start_column,
@@ -38,11 +39,11 @@ def write_transaction(
     )
     next_row = start_row + 1
     next_column = start_column + 3
-    return tuple(next_row, next_column)
+    return next_row, next_column
 
 
 def write_document(
-        sheet: openpyxl.Worksheet,
+        sheet,
         start_row: int,
         start_column: int,
         document: Document
@@ -64,16 +65,16 @@ def write_document(
     )
     next_row = start_row + 1
     next_column = start_column + 3
-    return tuple(next_row, next_column)
+    return next_row, next_column
 
 
 def write_tn(
-        sheet: openpyxl.Worksheet,
+        sheet,
         start_row: int,
         start_column: int,
         tn: TN
 ) -> Tuple[int, int]:
-    end = Tuple[int, int] = write_document(
+    end: Tuple[int, int] = write_document(
         sheet=sheet,
         start_row=start_row,
         start_column=start_column,
@@ -112,10 +113,9 @@ def write_report_sorted_by_contract_sum_by_transaction(
                 sheet=sheet,
                 start_row=start[0],
                 start_column=start[1],
-                tn=transaction
+                transaction=transaction
             )
-    excel_file.save(filename=((save_dir / f'сортировка_по_контрактам_сумма_по_позициям_{datetime.now()}.xlsx'
-                               ).replace(':', '-')))
+    excel_file.save(filename=(save_dir / f'сортировка_по_контрактам_сумма_по_позициям_{datetime.now()}.xlsx'.replace(':', '-')))
 
 
 def write_report_sorted_by_contract(report: List[List[TN]], save_dir: Path) -> None:
@@ -130,8 +130,7 @@ def write_report_sorted_by_contract(report: List[List[TN]], save_dir: Path) -> N
                 start_column=start[1],
                 tn=tn
             )
-    excel_file.save(filename=((save_dir / f'сортировка_по_контрактам_{datetime.now()}.xlsx'
-                               ).replace(':', '-')))
+    excel_file.save(filename=(save_dir / f'сортировка_по_контрактам_{datetime.now()}.xlsx'.replace(':', '-')))
 
 
 def write_report_sum_by_transaction(report: List[Transaction], save_dir: Path) -> None:
@@ -143,10 +142,9 @@ def write_report_sum_by_transaction(report: List[Transaction], save_dir: Path) -
             sheet=sheet,
             start_row=start[0],
             start_column=start[1],
-            tn=transaction
+            transaction=transaction
         )
-    excel_file.save(filename=((save_dir / f'сумма_по_позициям_{datetime.now()}.xlsx'
-                               ).replace(':', '-')))
+    excel_file.save(filename=(save_dir / f'сумма_по_позициям_{datetime.now()}.xlsx'.replace(':', '-')))
 
 
 def write_report_list_tn(report: List[TN], save_dir: Path) -> None:
@@ -160,5 +158,4 @@ def write_report_list_tn(report: List[TN], save_dir: Path) -> None:
             start_column=start[1],
             tn=tn
         )
-    excel_file.save(filename=((save_dir / f'список_накладных_{datetime.now()}.xlsx'
-                               ).replace(':', '-')))
+    excel_file.save(filename=(save_dir / f'список_накладных_{datetime.now()}.xlsx'.replace(':', '-')))
