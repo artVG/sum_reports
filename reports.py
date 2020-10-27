@@ -1,6 +1,7 @@
 from typing import List
 from tn import TN
 from transaction import Transaction
+from dataclasses import dataclass
 
 
 def sort_tn_by_contract(tns: List[TN]) -> List[List[TN]]:
@@ -37,12 +38,23 @@ def sum_by_transaction(tns: List[TN]) -> List[Transaction]:
     return sum_transactions
 
 
-def report_sorted_by_contract_sum_by_transaction(tns: List[TN]) -> List[List[Transaction]]:
+@dataclass
+class Report:
+    tns: List[Transaction]
+    contract: str
+
+
+def report_sorted_by_contract_sum_by_transaction(tns: List[TN]) -> List[Report]:
     contract_sorted = sort_tn_by_contract(tns)
     report = []
     for contract in contract_sorted:
-        summed_transactions_name = sum_by_transaction(contract)
-        report.append(summed_transactions_name)
+        summed_transactions = sum_by_transaction(contract)
+        report.append(
+            Report(
+                tns=summed_transactions,
+                contract=contract[0].contract
+            )
+        )
     return report
 
 

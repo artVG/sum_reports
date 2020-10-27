@@ -5,6 +5,7 @@ from tn import TN
 from pathlib import Path
 from document import Document
 from typing import Tuple, List
+from reports import Report
 
 
 def replace_special(s: str) -> str:
@@ -101,14 +102,14 @@ def write_tn(
 
 
 def write_report_sorted_by_contract_sum_by_transaction(
-        report: List[List[Transaction]],
+        report: List[Report],
         save_dir: Path
 ) -> None:
     excel_file = openpyxl.Workbook()
-    for contract in report:
-        sheet = excel_file.create_sheet(replace_special(contract[0].contract))
+    for report in report:
+        sheet = excel_file.create_sheet(replace_special(report.contract))
         start: Tuple[int, int] = (1, 1)
-        for transaction in contract:
+        for transaction in report.tns:
             start = write_transaction(
                 sheet=sheet,
                 start_row=start[0],
