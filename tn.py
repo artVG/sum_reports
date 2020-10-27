@@ -1,6 +1,6 @@
 from document import Document
 from transaction import Transaction
-from typing import List
+from typing import List, Dict
 
 
 class TN:
@@ -30,9 +30,9 @@ class TN:
             self.transactions.append(transaction)
 
 
-def from_dict(tn_dict: dict) -> List[TN]:
+def from_dict(tn_dict_list: List[Dict]) -> List[TN]:
     result: List[TN] = []
-    for tn_data in tn_dict:
+    for tn_data in tn_dict_list:
         new_tn: TN = TN(
             document=Document(
                 number=tn_data['number'],

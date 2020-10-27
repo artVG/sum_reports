@@ -25,7 +25,6 @@ def parse_tn(file: str) -> List[Dict]:
 def parse_transaction(file: str) -> List[Dict]:
     file: List[str] = strip_rtf(file).split('\n')
     result: list = []
-    i = 0
     for line in file:
         line = line.replace('\xa0', '')
         if re.findall(r'[0-9]*\|[0-9]{2}\.[0-9]{2}\.[0-9]+\|', line):

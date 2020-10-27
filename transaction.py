@@ -13,4 +13,3 @@ class Transaction:
             self.product == other.product and
             self.price == other.price
         )
-

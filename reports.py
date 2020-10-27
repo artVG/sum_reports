@@ -59,5 +59,3 @@ def report_sum_by_transaction(tns: List[TN]) -> List[Transaction]:
 
 def report_list_tn(tns: List[TN]) -> List[TN]:
     return tns
-
-
