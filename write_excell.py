@@ -116,7 +116,9 @@ def write_report_sorted_by_contract_sum_by_transaction(
                 start_column=start[1],
                 transaction=transaction
             )
-    excel_file.save(filename=(save_dir / f'сортировка_по_контрактам_сумма_по_позициям_{datetime.now()}.xlsx'.replace(':', '-')))
+    excel_file.save(
+        filename=(save_dir / f'сортировка_по_контрактам_сумма_по_позициям_{datetime.now()}.xlsx'.replace(':', '-'))
+    )
 
 
 def write_report_sorted_by_contract(report: List[List[TN]], save_dir: Path) -> None:

@@ -1,6 +1,6 @@
 from document import Document
 from transaction import Transaction
-from typing import List, Dict
+from typing import List, Dict, Union
 
 
 class TN:
@@ -8,7 +8,7 @@ class TN:
                  document: Document = Document(),
                  transactions_sum: str = '',
                  contract: str = '',
-                 transactions: List[Transaction] = []
+                 transactions: Union[List[Transaction], None] = None
                  ) -> None:
         self.document = document
         self.transactions_sum = transactions_sum
