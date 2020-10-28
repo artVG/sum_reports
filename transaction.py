@@ -1,6 +1,6 @@
 
 class Transaction:
-    def __init__(self, product: str = '', amount: str = '', price: str = '') -> None:
+    def __init__(self, product: str = '', amount: int = 0, price: str = '') -> None:
         self.product = product
         self.amount = amount
         self.price = price

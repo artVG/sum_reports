@@ -32,7 +32,7 @@ def parse_transaction(file: str) -> List[Dict]:
             doc: dict = {
                 'number': line_list[0],
                 'product': line_list[2],
-                'amount': line_list[3],
+                'amount': int(line_list[3]),
                 'price': line_list[4],
             }
             result.append(doc)
