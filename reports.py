@@ -61,7 +61,7 @@ def report_sorted_by_contract_sum_by_transaction(tns: List[TN]) -> List[Report]:
 def report_sorted_by_contract(tn: List[TN]) -> List[List[TN]]:
     report = sort_tn_by_contract(tn)
     for contract in report:
-        contract.sort(key=lambda x: x.date)
+        contract.sort(key=lambda x: x.document.date)
     return report
 
 

@@ -83,18 +83,18 @@ def write_tn(
     )
     sheet.cell(
         row=start_row,
-        column=end[2],
+        column=end[1],
         value=tn.contract
     )
     sheet.cell(
         row=start_row,
-        column=end[2] + 1,
+        column=end[1] + 1,
         value=tn.transactions_sum
     )
     for transaction in tn.transactions:
         end = write_transaction(
             sheet=sheet,
-            start_row=end[1],
+            start_row=end[0],
             start_column=start_column + 1,
             transaction=transaction
         )
@@ -113,7 +113,7 @@ def write_report_sorted_by_contract_sum_by_transaction(
             start = write_transaction(
                 sheet=sheet,
                 start_row=start[0],
-                start_column=start[1],
+                start_column=1,
                 transaction=transaction
             )
     excel_file.save(
@@ -130,7 +130,7 @@ def write_report_sorted_by_contract(report: List[List[TN]], save_dir: Path) -> N
             start = write_tn(
                 sheet=sheet,
                 start_row=start[0],
-                start_column=start[1],
+                start_column=1,
                 tn=tn
             )
     excel_file.save(filename=(save_dir / f'сортировка_по_контрактам_{datetime.now()}.xlsx'.replace(':', '-')))
@@ -144,7 +144,7 @@ def write_report_sum_by_transaction(report: List[Transaction], save_dir: Path) -
         start = write_transaction(
             sheet=sheet,
             start_row=start[0],
-            start_column=start[1],
+            start_column=1,
             transaction=transaction
         )
     excel_file.save(filename=(save_dir / f'сумма_по_позициям_{datetime.now()}.xlsx'.replace(':', '-')))
@@ -158,7 +158,7 @@ def write_report_list_tn(report: List[TN], save_dir: Path) -> None:
         start = write_tn(
             sheet=sheet,
             start_row=start[0],
-            start_column=start[1],
+            start_column=1,
             tn=tn
         )
     excel_file.save(filename=(save_dir / f'список_накладных_{datetime.now()}.xlsx'.replace(':', '-')))
