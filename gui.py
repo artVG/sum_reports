@@ -180,7 +180,7 @@ class ReportsPanel(Frame):
     def get_transactions(self):
         if not self.check_data():
             self.load_data()
-        return copy.deepcopy(self.data.transactions)
+        return copy.deepcopy(self.data.tns)
 
 
 class App(Tk):
