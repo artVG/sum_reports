@@ -163,7 +163,7 @@ class ReportsPanel(Frame):
         # current working directories shown to user
         self.working_dirs = working_dirs
 
-        # --------------------------------------------------------------------------------------------
+        # ------------all-reports--------------------------------------------------------------------------------
         # all reports in order as shown to user. all the same as in the first except create report file function
         self.wjt_sorted_by_contract_sum_by_transaction = Report(
             # string name of report
