@@ -1,4 +1,4 @@
-# summ_reports
+# sum_reports
 The only purpose was to make my life easier.
 
 All user instructions and examples of reports are in the instructions folder
