@@ -52,6 +52,7 @@ class ChooseFile(Frame):
 
     def choose_file(self):
         self.file = askopenfilename()
+        self.file_entry.delete(0, 'end')
         self.file_entry.insert(0, self.file)
 
     def get_address(self):
@@ -77,6 +78,7 @@ class ChooseOutDir(Frame):
 
     def choose_file(self):
         self.dir = askdirectory()
+        self.file_entry.delete(0, 'end')
         self.file_entry.insert(0, self.dir)
 
     def get_address(self):
