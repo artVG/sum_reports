@@ -1,5 +1,5 @@
 # summ_reports
-The only purpose was to make my life eseare.
+The only purpose was to make my life easier.
 
 All user instructions and examples of reports are in the instructions folder
 
