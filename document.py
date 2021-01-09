@@ -1,5 +1,6 @@
 
 class Document:
+    """any document base class"""
     def __init__(self, number: str = '', series: str = '', date: str = '') -> None:
         self.number = number
         self.series = series

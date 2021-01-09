@@ -3,6 +3,7 @@ from typing import FrozenSet, Dict
 
 
 def strip_rtf(text: str) -> str:
+    """rtf file parser"""
     pattern: re.Pattern = re.compile(r"\\([a-z]{1,32})(-?\d{1,10})?[ ]?|\\'([0-9a-f]{2})|\\([^a-z])|([{}])|[\r\n]+|(.)",
                                      re.I)
     # control words which specify a "destination".
